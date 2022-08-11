@@ -13,6 +13,9 @@ const Login = async (req, res) => {
     ) {
       let payload = {
         id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
         email: user.email
       }
       let token = middleware.createToken(payload)
@@ -24,18 +27,19 @@ const Login = async (req, res) => {
   }
 }
 
-const Register = async (req, res) => {
+const Register = async (req, 
+    res) => {
   try {
-    const { email, password, name } = req.body
+    const { email, password, firstName, lastName, username } = req.body
     let passwordDigest = await middleware.hashPassword(password)
-    const user = await User.create({ email, passwordDigest, name })
+    const user = await User.create({ email, passwordDigest, firstName, lastName, username })
     res.send(user)
   } catch (error) {
     throw error
   }
 }
 
-const UpdatePassword = async (req, res) => {
+/*const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
     const user = await User.findByPk(req.params.user_id)
@@ -53,15 +57,17 @@ const UpdatePassword = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {}
 }
+*/
 
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
 }
 
+
 module.exports = {
-  Login,
+  //Login,
   Register,
-  UpdatePassword,
-  CheckSession
+  //UpdatePassword,
+  //CheckSession
 }
