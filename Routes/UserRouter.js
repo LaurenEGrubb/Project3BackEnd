@@ -5,8 +5,8 @@ const AuthController = require('../Controllers/AuthController');
 
 Router.post(
   '/login',
-  middleware.stripToken,
-  middleware.verifyToken,
+  // middleware.stripToken,
+  // middleware.verifyToken,
   AuthController.Login
 );
 Router.get('/', UserController.getAllUsers);
