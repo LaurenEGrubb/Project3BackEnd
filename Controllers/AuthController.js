@@ -44,10 +44,10 @@ const Register = async (req, res) => {
   }
 };
 
-/*const UpdatePassword = async (req, res) => {
+const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body
-    const user = await User.findByPk(req.params.user_id)
+    const user = await User.findByPk(req.params.user_id) //provide/pass this id on the front end with the axios call //
     if (
       user &&
       (await middleware.comparePassword(
@@ -62,7 +62,7 @@ const Register = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
   } catch (error) {}
 }
-*/
+
 
 const CheckSession = async (req, res) => {
   const { payload } = res.locals;
@@ -71,7 +71,7 @@ const CheckSession = async (req, res) => {
 
 module.exports = {
   Login,
-  Register
-  //UpdatePassword,
-  //CheckSession
+  Register,
+  UpdatePassword,
+  CheckSession
 };
