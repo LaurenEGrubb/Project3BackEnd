@@ -18,6 +18,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getOneUser = async (req, res) => {
+  try {
+    let user = await User.findByPk(req.params.user_id);
+    res.send(user);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const updateUser = async (req, res) => {
   try {
     let userId = req.params.user_id;
@@ -44,6 +53,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   CreateUser,
+  getOneUser,
   getAllUsers,
   updateUser,
   deleteUser
