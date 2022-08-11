@@ -4,6 +4,7 @@ const UserRouter = require('./UserRouter');
 // const PhotoRouter = require('./PhotoRouter');
 
 Router.use('/users', UserRouter);
+
 // Router.use('/:user_id/album', AlbumRouter);
 
 module.exports = Router;
