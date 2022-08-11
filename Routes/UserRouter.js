@@ -14,10 +14,14 @@ Router.get('/', UserController.getAllUsers);
 // Router.post('/:user_id', UserController.CreateUser);
 
 Router.post('/register', AuthController.Register);
-// Router.get('/session',
-//     middleware.stripToken,
-//     middleware.verifyToken,
-//     AuthController.CheckSession
-//   )
+Router.put('/login/:user_id/updatepassword',
+    middleware.stripToken,
+    middleware.verifyToken,
+    AuthController.UpdatePassword )
+Router.get('/session',
+     middleware.stripToken,
+     middleware.verifyToken,
+     AuthController.CheckSession
+   )
 
 module.exports = Router;
