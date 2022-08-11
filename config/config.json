@@ -1,0 +1,18 @@
+
+{
+  "development": {
+    "database": "picture_perfect_database",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "picture_perfect_database",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "picture_perfect_database",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
