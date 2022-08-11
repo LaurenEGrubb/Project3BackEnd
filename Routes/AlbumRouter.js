@@ -5,6 +5,6 @@ const controller = require('../Controllers/AlbumController')
 // Router.get('/:Album_id', controller.GetAlbumDetails)
 Router.post('/:user_id', controller.CreateAlbum)
 // Router.delete('/:Album_id', controller.DeleteAlbum)
-// Router.put('/:Album_id', controller.UpdateAlbum)
+Router.put('/:album_id', controller.UpdateAlbum)
 
 module.exports = Router

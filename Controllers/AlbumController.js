@@ -56,7 +56,7 @@ const UpdateAlbum = async (req, res) => {
 module.exports = {
   // GetAllAlbums,
   // GetAlbumDetails,
-  CreateAlbum
+  CreateAlbum,
   // DeleteAlbum,
-  // UpdateAlbum
+  UpdateAlbum
 }
