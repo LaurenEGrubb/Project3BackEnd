@@ -8,10 +8,19 @@ const GetAllAlbums = async (req, res) => {
     throw error
   }
 }
+const GetUserAlbums = async (req, res) => {
+  try {
+    let userId = parseInt(req.params.user_id)
+    let albums = await Album.findAll({ where: { userId: userId } })
+    res.send(albums)
+  } catch (error) {
+    throw error
+  }
+}
 
 const GetAlbumDetails = async (req, res) => {
   try {
-    const album = await Album.findByPk(req.params.album_id)
+    const album = await Album.findByPk(req.params.user_id)
     res.send(album)
   } catch (error) {
     throw error
@@ -54,9 +63,10 @@ const UpdateAlbum = async (req, res) => {
 }
 
 module.exports = {
-  // GetAllAlbums,
-  // GetAlbumDetails,
+  GetAllAlbums,
+  GetAlbumDetails,
   CreateAlbum,
-  // DeleteAlbum,
-  UpdateAlbum
+  DeleteAlbum,
+  UpdateAlbum,
+  GetUserAlbums
 }
