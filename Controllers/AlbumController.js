@@ -1,9 +1,8 @@
 const { Album } = require('../models')
-const album = require('../models/album')
 
 const GetAllAlbums = async (req, res) => {
   try {
-    let albums = await album.findAll({})
+    let albums = await Album.findAll({})
     res.send(albums)
   } catch (error) {
     throw error
@@ -12,7 +11,7 @@ const GetAllAlbums = async (req, res) => {
 
 const GetAlbumDetails = async (req, res) => {
   try {
-    const album = await album.findByPk(req.params.album_id)
+    const album = await Album.findByPk(req.params.album_id)
     res.send(album)
   } catch (error) {
     throw error
@@ -21,7 +20,7 @@ const GetAlbumDetails = async (req, res) => {
 const DeleteAlbum = async (req, res) => {
   try {
     let albumId = parseInt(req.params.album_id)
-    await album.destroy({ where: { id: albumId } })
+    await Album.destroy({ where: { id: albumId } })
     res.send({ message: `Deleted album with an ID of ${albumId}!` })
   } catch (error) {
     throw error
@@ -30,12 +29,12 @@ const DeleteAlbum = async (req, res) => {
 
 const CreateAlbum = async (req, res) => {
   try {
-    let teamId = parseInt(req.params.team_id)
+    let userId = parseInt(req.params.user_id)
     let albumBody = {
       ...req.body,
-      teamId
+      userId
     }
-    let album = await album.create(albumBody)
+    let album = await Album.create(albumBody)
     res.send(album)
   } catch (error) {
     throw error
@@ -44,7 +43,7 @@ const CreateAlbum = async (req, res) => {
 const UpdateAlbum = async (req, res) => {
   try {
     let albumId = parseInt(req.params.album_id)
-    let updated = await album.update(req.body, {
+    let updated = await Album.update(req.body, {
       where: { id: albumId },
       returning: true
     })
