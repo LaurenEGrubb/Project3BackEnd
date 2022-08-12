@@ -68,9 +68,20 @@ const CheckSession = async (req, res) => {
   res.send(payload);
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    let userId = parseInt(req.params.user_id);
+    await User.destroy({ where: { id: userId } });
+    res.send({ message: 'Deleted this user!' });
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   Login,
   Register,
-  UpdatePassword
+  UpdatePassword,
+  deleteUser
   //CheckSession
 };
