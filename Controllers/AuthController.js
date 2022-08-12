@@ -82,6 +82,6 @@ module.exports = {
   Login,
   Register,
   UpdatePassword,
-  deleteUser
-  //CheckSession
+  deleteUser,
+  CheckSession
 };
