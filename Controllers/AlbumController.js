@@ -17,7 +17,6 @@ const GetUserAlbums = async (req, res) => {
     throw error
   }
 }
-// comment here
 
 const GetAlbumPhotos = async (req, res) => {
   try {
