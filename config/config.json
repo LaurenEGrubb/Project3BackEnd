@@ -5,15 +5,11 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "viry",
-    "password": "1234",
     "database": "picture_perfect_database",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "viry",
-    "password": "1234",
     "database": "picture_perfect_database",
     "host": "127.0.0.1",
     "dialect": "postgres"
