@@ -56,11 +56,20 @@ const UpdatePassword = async (req, res) => {
       ))
     ) {
       let passwordDigest = await middleware.hashPassword(newPassword);
+      // if (
+      //   user &&
+      //   (await middleware.comparePassword(
+      //     user.dataValues.passwordDigest,
+      //     confirmPassword
+      //   ))
+      // )
       await user.update({ passwordDigest });
       return res.send({ status: 'Ok', payload: user });
     }
     res.status(401).send({ status: 'Error', msg: 'Unauthorized' });
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
 const CheckSession = async (req, res) => {
