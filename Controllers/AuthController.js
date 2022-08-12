@@ -30,7 +30,10 @@ const Login = async (req, res) => {
 const Register = async (req, res) => {
   try {
     const { email, password, firstName, lastName, username } = req.body;
-    let passwordDigest = await middleware.hashPassword(password);
+    let passwordDigest = await middleware.hashPassword(
+      password,
+      process.env.SALT_ROUNDS
+    );
     const user = await User.create({
       email,
       passwordDigest,
@@ -47,7 +50,7 @@ const Register = async (req, res) => {
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    const user = await User.findByPk(req.params.user_id);
+    const user = await User.findOne({ where: { email: req.body.email } });
     if (
       user &&
       (await middleware.comparePassword(
@@ -79,9 +82,18 @@ const CheckSession = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    let userId = parseInt(req.params.user_id);
-    await User.destroy({ where: { id: userId } });
-    res.send({ message: 'Deleted this user!' });
+    const user = await User.findOne({
+      where: { email: req.body.email }
+    });
+    console.log(user);
+    if (
+      user &&
+      (await middleware.comparePassword(user.passwordDigest, req.body.password))
+    ) {
+      await user.destroy();
+      return res.send({ message: 'Deleted this user!' });
+    }
+    res.status(401).send({ status: 'Error', msg: 'Unauthorized' });
   } catch (error) {
     throw error;
   }
