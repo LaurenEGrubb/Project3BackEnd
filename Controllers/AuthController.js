@@ -47,7 +47,7 @@ const Register = async (req, res) => {
 const UpdatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    const user = await User.findByPk(req.params.user_id); //provide/pass this id on the front end with the axios call //
+    const user = await User.findByPk(req.params.user_id);
     if (
       user &&
       (await middleware.comparePassword(
@@ -71,6 +71,6 @@ const CheckSession = async (req, res) => {
 module.exports = {
   Login,
   Register,
-  UpdatePassword,
-  CheckSession
+  UpdatePassword
+  //CheckSession
 };
