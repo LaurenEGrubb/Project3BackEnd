@@ -18,24 +18,24 @@ const { Photo } = require('../models')
 //   }
 // }
 
-// const GetPhotoDetails = async (req, res) => {
-//   try {
-//     let photoId = parseInt(req.params.photo_id)
-//     await Photo.findByPk({ where: { id: photoId } })
-//     res.send(photoId)
-//   } catch (error) {
-//     throw error
-//   }
-// }
-// const DeletePhoto = async (req, res) => {
-//   try {
-//     let photoId = parseInt(req.params.Photo_id)
-//     await photo.destroy({ where: { id: PhotoId } })
-//     res.send({ message: `Deleted Photo with an ID of ${photoId}!` })
-//   } catch (error) {
-//     throw error
-//   }
-// }
+const GetPhotoDetails = async (req, res) => {
+  try {
+    let photoId = parseInt(req.params.photo_id)
+    let photoDetails = await Photo.findAll({ where: { id: photoId } })
+    res.send(photoDetails)
+  } catch (error) {
+    throw error
+  }
+}
+const DeletePhoto = async (req, res) => {
+  try {
+    let photoId = parseInt(req.params.photo_id)
+    await Photo.destroy({ where: { id: photoId } })
+    res.send({ message: `Deleted Photo with an ID of ${photoId}!` })
+  } catch (error) {
+    throw error
+  }
+}
 
 const CreatePhoto = async (req, res) => {
   try {
@@ -50,24 +50,24 @@ const CreatePhoto = async (req, res) => {
     throw error
   }
 }
-// const UpdatePhoto = async (req, res) => {
-//   try {
-//     let photoId = parseInt(req.params.photo_id)
-//     let updated = await Photo.update(req.body, {
-//       where: { id: photoId },
-//       returning: true
-//     })
-//     res.send(updated)
-//   } catch (error) {
-//     throw error
-//   }
-// }
+const UpdatePhoto = async (req, res) => {
+  try {
+    let photoId = parseInt(req.params.photo_id)
+    let updated = await Photo.update(req.body, {
+      where: { id: photoId },
+      returning: true
+    })
+    res.send(updated)
+  } catch (error) {
+    throw error
+  }
+}
 
 module.exports = {
   // GetAllPhotos,
-  // GetPhotoDetails,
-  CreatePhoto
-  // DeletePhoto,
-  // UpdatePhoto,
+  GetPhotoDetails,
+  CreatePhoto,
+  DeletePhoto,
+  UpdatePhoto
   // GetalbumPhotos
 }
