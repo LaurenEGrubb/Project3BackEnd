@@ -21,8 +21,9 @@ const GetUserAlbums = async (req, res) => {
 const GetAlbumDetails = async (req, res) => {
   try {
     let albumId = parseInt(req.params.album_id)
-    await Album.findByPk({ where: { id: albumId } })
-    res.send(albumId)
+    const album = await Album.findByPk(albumId)
+
+    res.send(album)
   } catch (error) {
     throw error
   }
