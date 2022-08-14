@@ -80,12 +80,11 @@ const CheckSession = async (req, res) => {
   res.send(payload);
 };
 
-const deleteUser = async (req, res) => {
+const DeleteUser = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.body.email }
     });
-    console.log(user);
     if (
       user &&
       (await middleware.comparePassword(user.passwordDigest, req.body.password))
@@ -103,6 +102,6 @@ module.exports = {
   Login,
   Register,
   UpdatePassword,
-  deleteUser,
+  DeleteUser,
   CheckSession
 };
