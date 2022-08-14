@@ -77,7 +77,6 @@ const UpdatePassword = async (req, res) => {
 
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
-
   res.send(payload)
 }
 
@@ -86,7 +85,7 @@ const DeleteUser = async (req, res) => {
     const user = await User.findOne({
       where: { email: req.body.email }
     })
-    if (
+  if (
       user &&
       (await middleware.comparePassword(user.passwordDigest, req.body.password))
     ) {
