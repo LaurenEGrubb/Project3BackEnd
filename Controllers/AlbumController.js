@@ -20,7 +20,7 @@ const GetUserAlbums = async (req, res) => {
 
 const GetAlbumPhotos = async (req, res) => {
   try {
-    let album = await Album.findAll({
+    let album = await Album.findOne({
       where: { id: req.params.album_id },
       include: [{ model: Photo, as: 'photos' }]
     })
@@ -44,7 +44,7 @@ const CreateAlbum = async (req, res) => {
     let userId = parseInt(req.params.user_id)
     let albumBody = {
       ...req.body,
-      userId
+      userId: userId
     }
     let album = await Album.create(albumBody)
     res.send(album)
