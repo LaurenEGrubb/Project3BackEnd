@@ -1,49 +1,46 @@
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS)
-const APP_SECRET = `${process.env.APP_SECRET}`
+'use strict'
 
-const hashPassword = async (password) => {
-  let hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
-  return hashedPassword
-}
-const comparePassword = async (storedPassword, password) => {
-  let passwordMatch = await bcrypt.compare(password, storedPassword)
-  return passwordMatch
-}
-const createToken = (payload) => {
-  let token = jwt.sign(payload, APP_SECRET)
-  return token
-}
-const verifyToken = (req, res, next) => {
-  const { token } = res.locals
-  let payload = jwt.verify(token, APP_SECRET)
-  if (payload) {
-    res.locals.payload = payload
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+const basename = path.basename(__filename)
+const env = process.env.NODE_ENV || 'development'
+const config = require(__dirname + '/../config/config.json')[env]
+const db = {}
 
-    return next()
+let sequelize
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config)
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  )
+}
+
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+    )
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes
+    )
+    db[model.name] = model
+  })
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db)
   }
-  res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
-}
+})
 
-const stripToken = (req, res, next) => {
-  try {
-    const token = req.headers['authorization'].split(' ')[1]
-    if (token) {
-      res.locals.token = token
-      return next()
-    }
-  } catch (error) {
-    console.log(error)
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
-  }
-}
+db.sequelize = sequelize
+db.Sequelize = Sequelize
 
-module.exports = {
-  stripToken,
-  verifyToken,
-  createToken,
-  comparePassword,
-  hashPassword
-}
+module.exports = db
