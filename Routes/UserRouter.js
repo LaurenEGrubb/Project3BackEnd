@@ -3,6 +3,8 @@ const UserController = require('../Controllers/UserController');
 const middleware = require('../middleware');
 const AuthController = require('../Controllers/AuthController');
 
+Router.post('/register', AuthController.Register)
+
 Router.post('/login', AuthController.Login);
 Router.get('/', UserController.getAllUsers);
 Router.get(
@@ -10,7 +12,9 @@ Router.get(
   middleware.stripToken,
   middleware.verifyToken,
   AuthController.CheckSession
-);
+)
+// Router.post('/:user_id', UserController.CreateUser)
+
 
 Router.put('/:user_id/profilepic', AuthController.UpdateProfilePic);
 
@@ -31,4 +35,5 @@ Router.delete(
   AuthController.DeleteUser
 );
 
-module.exports = Router;
+Router.get('/:user_id', UserController.getOneUser)
+module.exports = Router

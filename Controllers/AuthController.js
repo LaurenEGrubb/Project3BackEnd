@@ -80,7 +80,8 @@ const DeleteUser = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.body.email }
-    });
+    })
+
     if (
       user &&
       (await middleware.comparePassword(user.passwordDigest, req.body.password))
