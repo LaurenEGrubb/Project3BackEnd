@@ -5,17 +5,16 @@ const AuthController = require('../Controllers/AuthController')
 const { application } = require('express')
 
 Router.post('/login', AuthController.Login)
-Router.get('/', UserController.getAllUsers)
+// Router.get('/', UserController.getAllUsers)
+
+Router.post('/register', AuthController.Register)
 Router.get(
   '/session',
   middleware.stripToken,
   middleware.verifyToken,
   AuthController.CheckSession
 )
-Router.get('/:user_id', UserController.getOneUser)
 // Router.post('/:user_id', UserController.CreateUser)
-
-Router.post('/register', AuthController.Register)
 Router.put(
   '/updatepassword',
   middleware.stripToken,
@@ -30,4 +29,5 @@ Router.delete(
   AuthController.DeleteUser
 )
 
+Router.get('/:user_id', UserController.getOneUser)
 module.exports = Router
