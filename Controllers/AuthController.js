@@ -13,6 +13,7 @@ const Login = async (req, res) => {
     ) {
       let payload = {
         id: user.id,
+        profilePicture: user.profilePicture,
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,
@@ -29,7 +30,12 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
+<<<<<<< HEAD
     const { email, password, firstName, lastName, username } = req.body;
+=======
+    const { email, password, firstName, lastName, username, profilePicture } =
+      req.body;
+>>>>>>> ef7156c61520eab0e3abdf8c09bafd23ed29ca8c
     let passwordDigest = await middleware.hashPassword(
       password,
       process.env.SALT_ROUNDS
@@ -39,7 +45,12 @@ const Register = async (req, res) => {
       passwordDigest,
       firstName,
       lastName,
+<<<<<<< HEAD
       username
+=======
+      username,
+      profilePicture
+>>>>>>> ef7156c61520eab0e3abdf8c09bafd23ed29ca8c
     });
     res.send(user);
   } catch (error) {
@@ -59,6 +70,7 @@ const UpdatePassword = async (req, res) => {
       ))
     ) {
       let passwordDigest = await middleware.hashPassword(newPassword);
+<<<<<<< HEAD
       // if (
       //   user &&
       //   (await middleware.comparePassword(
@@ -66,6 +78,8 @@ const UpdatePassword = async (req, res) => {
       //     confirmPassword
       //   ))
       // )
+=======
+>>>>>>> ef7156c61520eab0e3abdf8c09bafd23ed29ca8c
       await user.update({ passwordDigest });
       return res.send({ status: 'Ok', payload: user });
     }
@@ -84,7 +98,8 @@ const DeleteUser = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.body.email }
-    });
+    })
+
     if (
       user &&
       (await middleware.comparePassword(user.passwordDigest, req.body.password))
@@ -98,10 +113,28 @@ const DeleteUser = async (req, res) => {
   }
 };
 
+const UpdateProfilePic = async (req, res) => {
+  try {
+    let userId = parseInt(req.params.user_id);
+    let updatedPhoto = await User.update(req.body, {
+      where: { id: userId },
+      returning: true
+    });
+    res.send(updatedPhoto);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   Login,
   Register,
   UpdatePassword,
   DeleteUser,
+<<<<<<< HEAD
   CheckSession
+=======
+  CheckSession,
+  UpdateProfilePic
+>>>>>>> ef7156c61520eab0e3abdf8c09bafd23ed29ca8c
 };
