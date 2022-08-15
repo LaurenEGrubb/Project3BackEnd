@@ -12,7 +12,12 @@ Router.get(
   AuthController.CheckSession
 );
 
-Router.put('/:user_id/profilepic', AuthController.UpdateProfilePic);
+Router.put(
+  '/:user_id/profilepic',
+  middleware.stripToken,
+  middleware.verifyToken,
+  AuthController.UpdateProfilePic
+);
 
 Router.get('/:user_id', UserController.getOneUser);
 
