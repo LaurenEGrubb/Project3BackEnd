@@ -13,8 +13,8 @@ Router.get(
 );
 Router.post(
   '/:album_id',
-  // middleware.stripToken,
-  // middleware.verifyToken,
+  middleware.stripToken,
+  middleware.verifyToken,
   FileController.upload,
   controller.CreatePhoto
 );

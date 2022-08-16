@@ -4,8 +4,6 @@ const logger = require('morgan');
 
 const app = express();
 
-// global.__basedir = __dirname;
-
 const AppRouter = require('./Routes/AppRouter');
 
 const PORT = process.env.PORT || 3001;

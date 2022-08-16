@@ -44,7 +44,6 @@ const CreatePhoto = async (req, res) => {
       photoUrl: req.file.path,
       name: req.body.name,
       description: req.body.description,
-      // ...req.body,
       albumId: albumId
     };
     let photo = await Photo.create(photoBody);
