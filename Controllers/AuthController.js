@@ -30,13 +30,6 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    let userBody = {
-      email: req.body.email,
-      password: req.body.passwordDigest,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      username: req.body.username
-    };
     const profilePicture = req.file.path;
     const { email, password, firstName, lastName, username } = req.body;
     let passwordDigest = await middleware.hashPassword(
