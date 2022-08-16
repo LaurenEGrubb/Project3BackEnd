@@ -2,8 +2,9 @@ const Router = require('express').Router();
 const UserController = require('../Controllers/UserController');
 const middleware = require('../middleware');
 const AuthController = require('../Controllers/AuthController');
+const FileController = require('../Controllers/FileController');
 
-Router.post('/register', AuthController.Register)
+// Router.post('/register', AuthController.Register);
 
 Router.post('/login', AuthController.Login);
 Router.get('/', UserController.getAllUsers);
@@ -12,9 +13,8 @@ Router.get(
   middleware.stripToken,
   middleware.verifyToken,
   AuthController.CheckSession
-)
+);
 // Router.post('/:user_id', UserController.CreateUser)
-
 
 Router.put(
   '/:user_id/profilepic',
@@ -25,7 +25,7 @@ Router.put(
 
 Router.get('/:user_id', UserController.getOneUser);
 
-Router.post('/register', AuthController.Register);
+Router.post('/register', FileController.uploadUserPic, AuthController.Register);
 Router.put(
   '/updatepassword',
   middleware.stripToken,
@@ -40,5 +40,5 @@ Router.delete(
   AuthController.DeleteUser
 );
 
-Router.get('/:user_id', UserController.getOneUser)
-module.exports = Router
+Router.get('/:user_id', UserController.getOneUser);
+module.exports = Router;

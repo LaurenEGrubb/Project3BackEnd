@@ -30,8 +30,15 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    const { email, password, firstName, lastName, username, profilePicture } =
-      req.body;
+    let userBody = {
+      email: req.body.email,
+      password: req.body.passwordDigest,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      username: req.body.username
+    };
+    const profilePicture = req.file.path;
+    const { email, password, firstName, lastName, username } = req.body;
     let passwordDigest = await middleware.hashPassword(
       password,
       process.env.SALT_ROUNDS
@@ -80,7 +87,7 @@ const DeleteUser = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.body.email }
-    })
+    });
 
     if (
       user &&

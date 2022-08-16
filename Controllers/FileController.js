@@ -26,6 +26,21 @@ const upload = multer({
   }
 }).single('photoUrl');
 
+const uploadUserPic = multer({
+  storage: storage,
+  limits: { fileSize: '1000000' },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimetype = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname));
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb('Give proper file format to upload');
+  }
+}).single('profilePicture');
+
 // const getListFiles = (req, res) => {
 //   const directoryPath = __basedir + '/resources/static/assets/uploads/';
 //   fs.readdir(directoryPath, function (err, files) {
@@ -58,7 +73,8 @@ const upload = multer({
 // };
 
 module.exports = {
-  upload
+  upload,
+  uploadUserPic
   // getListFiles,
   // download
 };
