@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const middleware = require('../middleware');
+const { randWeekday } = require('@ngneat/falso');
 
 const Login = async (req, res) => {
   try {
@@ -30,8 +31,17 @@ const Login = async (req, res) => {
 
 const Register = async (req, res) => {
   try {
-    const { email, password, firstName, lastName, username } = req.body;
-    const profilePicture = req.file.path;
+    let { email, password, firstName, lastName, username, profilePicture } =
+      req.body;
+
+    if (profilePicture === undefined && req.file) {
+      profilePicture = req.file.path;
+    } else if (profilePicture !== undefined && !req.file) {
+      console.log('User is using a custom URL');
+    } else {
+      profilePicture =
+        'https://i1.wp.com/wilcity.com/wp-content/uploads/2020/06/115-1150152_default-profile-picture-avatar-png-green.jpg?fit=820%2C860&ssl=1';
+    }
     let passwordDigest = await middleware.hashPassword(
       password,
       process.env.SALT_ROUNDS
