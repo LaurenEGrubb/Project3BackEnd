@@ -1,6 +1,5 @@
 const { User } = require('../models');
 const middleware = require('../middleware');
-const { randWeekday } = require('@ngneat/falso');
 
 const Login = async (req, res) => {
   try {
