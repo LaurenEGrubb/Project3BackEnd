@@ -2,7 +2,7 @@ const Router = require('express').Router();
 const UserController = require('../Controllers/UserController');
 const middleware = require('../middleware');
 const AuthController = require('../Controllers/AuthController');
-const FileController = require('../Controllers/FileController');
+// const FileController = require('../Controllers/FileController');
 
 // Router.post('/register', AuthController.Register);
 
@@ -25,7 +25,7 @@ Router.put(
 
 Router.get('/:user_id', UserController.getOneUser);
 
-Router.post('/register', FileController.uploadUserPic, AuthController.Register);
+// Router.post('/register', AuthController.Register);
 Router.put(
   '/updatepassword',
   middleware.stripToken,
