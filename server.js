@@ -38,6 +38,7 @@ const multer = Multer({
 // add image to create new album
 
 app.post('/add-image/:user_id', multer.single('photoUrl'), async (req, res) => {
+
   let userId = parseInt(req.params.user_id)
   let albumBody = {
     photoUrl: req.file.publicUrl,
