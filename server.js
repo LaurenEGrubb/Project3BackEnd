@@ -37,7 +37,7 @@ const multer = Multer({
 
 // add image to create new album
 
-app.post('/add-image/:user_id', multer.single('image'), async (req, res) => {
+app.post('/add-image/:user_id', multer.single('photoUrl'), async (req, res) => {
   let userId = parseInt(req.params.user_id);
   let albumBody = {
     photoUrl: req.file.publicUrl,
@@ -51,17 +51,21 @@ app.post('/add-image/:user_id', multer.single('image'), async (req, res) => {
 
 // add image to create new photo post
 
-app.post('/add-image/:album_id', multer.single('image'), async (req, res) => {
-  let albumId = parseInt(req.params.album_id);
-  let photoBody = {
-    photoUrl: req.file.publicUrl,
-    name: req.body.name,
-    description: req.body.description,
-    albumId: albumId
-  };
-  let photo = await Photo.create(photoBody);
-  res.send(photo);
-});
+app.post(
+  '/add-image/photo/:album_id',
+  multer.single('photoUrl'),
+  async (req, res) => {
+    let albumId = parseInt(req.params.album_id);
+    let photoBody = {
+      photoUrl: req.file.publicUrl,
+      name: req.body.name,
+      description: req.body.description,
+      albumId: albumId
+    };
+    let photo = await Photo.create(photoBody);
+    res.send(photo);
+  }
+);
 
 // add image to profilePicture
 
